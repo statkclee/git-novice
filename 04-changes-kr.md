@@ -4,7 +4,7 @@ title: Git을 사용한 버젼 관리
 subtitle: 변경사항 추적
 minutes: 20
 ---
-> ## 학습목표 {.objectives}
+> ## 학습 목표 {.objectives}
 > 
 > *   파일 한개 혹은 다수 파일에 대해서 변경-추가-커밋(modify-add-commit) 주기를 수행한다.
 > *   각 Git 커밋 작업흐름 단계별로 정보가 어디에 저장되는지 설명한다.

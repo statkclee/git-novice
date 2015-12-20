@@ -4,7 +4,7 @@ title: Git을 사용한 버젼 관리
 subtitle: 저장소 생성
 minutes: 10
 ---
-> ## 학습목표 {.objectives}
+> ## 학습 목표 {.objectives}
 > 
 > *   로컬 컴퓨터에 Git 저장소를 생성한다.
 
