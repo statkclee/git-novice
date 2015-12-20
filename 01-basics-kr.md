@@ -1,10 +1,10 @@
 ---
 layout: page
-title: Version Control with Git
-subtitle: Setting Up Git
+title: Git을 사용한 버젼 관리
+subtitle: 자동화된 버젼제어
 minutes: 5
 ---
-> ## Learning Objectives {.objectives}
+> ## 학습 목표 {.objectives}
 >
 > *   Understand the benefits of an automated version control system.
 > *   Understand the basics of how Git works.
