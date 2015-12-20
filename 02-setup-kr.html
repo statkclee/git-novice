@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: Git을 사용한 버젼 관리</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">Git을 사용한 버젼 관리</h1></a>
+          <h2 class="subtitle">Git 구축 및 설정</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h2 id="학습-목표"><span class="glyphicon glyphicon-certificate"></span>학습 목표</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li><code>git</code> 환경설정하고 본인 컴퓨터에 사용한다.</li>
+<li><code>--global</code> 환경설정 플래그 의미를 이해한다.</li>
+</ul>
+</div>
+</section>
+<p>처음 Git를 새로운 컴퓨터에 사용할 때, 몇가지 설정이 필요하다. 다음에 Dracula가 새로 구입한 노트북에 환경설정하는 방법이 나와있다:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> config --global user.name <span class="st">&quot;Vlad Dracula&quot;</span>
+$ <span class="kw">git</span> config --global user.email <span class="st">&quot;vlad@tran.sylvan.ia&quot;</span>
+$ <span class="kw">git</span> config --global color.ui <span class="st">&quot;auto&quot;</span></code></pre></div>
+<p>(드라큘라 정보 대신에 자신의 이름과 전자우편 주소를 사용한다.)</p>
+<p>다음 표를 참조해서, 본인이 선호하는 텍스트 편집기로 환경설정을 한다:</p>
+<table>
+<colgroup>
+<col width="29%" />
+<col width="70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">편집기</th>
+<th align="left">환경설정 명령어</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">nano</td>
+<td align="left"><code>$ git config --global core.editor &quot;nano -w&quot;</code></td>
+</tr>
+<tr class="even">
+<td align="left">Text Wrangler</td>
+<td align="left"><code>$ git config --global core.editor &quot;edit -w&quot;</code></td>
+</tr>
+<tr class="odd">
+<td align="left">Sublime Text (맥)</td>
+<td align="left"><code>$ git config --global core.editor &quot;subl -n -w&quot;</code></td>
+</tr>
+<tr class="even">
+<td align="left">Sublime Text (윈도우)</td>
+<td align="left"><code>$ git config --global core.editor &quot;'c:/program files/sublime text 2/sublime_text.exe' -w&quot;</code></td>
+</tr>
+<tr class="odd">
+<td align="left">Notepad++ (윈도우)</td>
+<td align="left"><code>$ git config --global core.editor &quot;'c:/program files (x86)/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin&quot;</code></td>
+</tr>
+<tr class="even">
+<td align="left">Kate (리눅스)</td>
+<td align="left"><code>$ git config --global core.editor &quot;kate&quot;</code></td>
+</tr>
+<tr class="odd">
+<td align="left">Gedit (리눅스)</td>
+<td align="left"><code>$ git config --global core.editor &quot;gedit -s&quot;</code></td>
+</tr>
+</tbody>
+</table>
+<p>Git 명령어는 <code>git verb</code> 형식으로 작성되고 <code>verb</code> 가 실제로 수행하고자 하는 명령어가 된다. 상기의 경우 Git에게 다음을 명령한다:</p>
+<ul>
+<li>자신의 이름과 전자우편 주소</li>
+<li>출력 결과를 색깔을 넣어 표현</li>
+<li>선호하는 텍스트 편집기 선정</li>
+<li>설정 사항을 전역(global)으로 한다. (즉, 모든 프로젝트에 적용)</li>
+</ul>
+<p>상기 4개 명령어는 한번만 실행되면 된다: <code>--global</code> 플래그가 Git에게 해당 컴퓨터에서 실행되는 모든 프로젝트에 적용되도록 일러준다.</p>
+<p>언제든지 설정 사항을 다음 명령어로 확인할 수 있다:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> config --list</code></pre></div>
+<p>원하는 만큼 얼마든지 환경설정을 바꿀 수 있다: 동일한 명령어를 사용해서 다른 편집기 정보와 전자우편주소를 갱신한다.</p>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h2 id="proxy"><span class="glyphicon glyphicon-pushpin"></span>Proxy</h2>
+</div>
+<div class="panel-body">
+<p>일부 네트워크 환경에서 <a href="https://en.wikipedia.org/wiki/Proxy_server">proxy</a>를 사용할 필요가 있다. 이런 경우에, Git에게 프록시 정보를 일러줄 필요가 있다:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> config --global http.proxy proxy-url
+$ <span class="kw">git</span> config --global https.proxy proxy-url</code></pre></div>
+<p>프록시를 비활성화 시키려면, 다음을 사용한다.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> config --global --unset http.proxy
+$ <span class="kw">git</span> config --global --unset https.proxy</code></pre></div>
+</div>
+</aside>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/git-novice">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>
