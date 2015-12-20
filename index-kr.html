@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: Git을 사용한 버젼 관리</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <h1 class="title">Git을 사용한 버젼 관리</h1>
+          <p>화성에 다음 행성착륙선을 보낼 수 있는지 조사하기 위해서 Universal Mission사(희열 주립대학에서 분사된 우주 서비스 회사)에서 늑대인간과 드라큘라를 채용했다. 둘다 동시에 계획에 작업하기 희밍하지만, 과거에 동시작업하면서 문제에 봉착했다. 만약 순서를 정해서 작업한다면, 다른 사람이 작업을 끝낼 때까지 마냥 기다려야만 된다. 하지만, 본인 계획을 가지고 작업을 해서 전자 우편으로 주고 받고 하는 것은 분실되고, 덮어쓰고, 이중기록되는 문제가 있다.</p>
+<p>한 동료가 작업관리로 <a href="reference.html#version-control">버젼 제어(version control)</a>를 제안했다. 버젼 제어가 전자우편을 주고 받는 것보다 낫다:</p>
+<ul>
+<li><p>버젼 제어에 커밋된 어떤 것도 분실되지 않는다. 모든 과거 파일 이력이 저장되기 때문에, 항상 누가 무엇을 특정 시점에 작업한 것, 혹은 특정 결과를 생성하는데 무슨 프로그램 버젼을 사용했는지도 살펴보려 하면 시간여행해서 되돌아 보는 것도 가능하다.</p></li>
+<li><p>누가 언제 언떤 변경을 했다는 기록을 보유하고 있어서, 추후 질문이 있다면 누구에게 물어봐야 되는지 알게 된다. 그리고, 만약 필요하다면, 편집기에서 “실행 취소(undo)”와 매우 유사하게 이전 버젼으로 원복도 가능하다.</p></li>
+<li><p>동일 프로젝트에 여러명이 협업할 때, 실수로 누군가의 변경사항을 간과하거나 덮어쓰곤 한다: 버젼제어 시스템은 자동적으로 사용자에게 알람을 줘서 본인 작업과 다른 사람 작업사이에 충돌(conflict)이 있다는 것을 알 수 있다.</p></li>
+</ul>
+<p>팀으로 작업하는 사람만 버젼제어로부터 혜택을 받는 것은 아니다: 단독 연구자도 상당히 혜택을 받을 수 있다. 만약 추후에 해당 프로젝트로 되돌아 볼 필요가 있다면 (예를 들어, 기억이 희미해지는 1년 후에), 무엇이 언제, 왜 변경되었는지 기록을 보관하는 것이 모든 연구자에게 극도로 중요하다.</p>
+<p>버젼관리 (Version Control)은 디저털 세상에서 연구실 수첩이다: 버젼관리는 전문가가 자신이 한것과 다른 사람과 협업한 것을 기록하고 관리하기 위해서 사용하는 것이다. 모든 대형 소프트웨어 개발 프로젝트는 버젼제어에 의존하며, 대부분의 프로그래머는 작은 일에도 사용한다. 버젼제어가 단지 소프트웨어만 한정된 것이 아니다. 책, 논문, 작은 데이터셋, 시간에 따라 변하고 공유될 필요가 있는 어떤 것이나 버젼제어 시스템에 저장될 수 있고 되여야 한다.</p>
+<section class="prereq panel panel-warning">
+<div class="panel-heading">
+<h2 id="전제조건"><span class="glyphicon glyphicon-education"></span>전제조건</h2>
+</div>
+<div class="panel-body">
+<p>이번 학습에서 유닉스 쉘에서 Git을 사용한다. 쉘을 사용한 이전 경험 일부를 기대하지만, <em>강제적인 의무사항은 아니다.</em></p>
+</div>
+</section>
+<section class="getready panel panel-warning">
+<div class="panel-heading">
+<h2 id="사전-준비"><span class="glyphicon glyphicon-check"></span>사전 준비</h2>
+</div>
+<div class="panel-body">
+<p>사전에 준비할 것은 없다: 출발 준비가 되었다!</p>
+</div>
+</section>
+<h2 id="학습주제">학습주제</h2>
+<table style="width:74%;">
+<colgroup>
+<col width="34%" />
+<col width="38%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">한국어(Korean)</th>
+<th align="left">영어(English)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1. <a href="01-basics-kr.html">자동화된 버젼제어</a></td>
+<td align="left">1. <a href="01-basics.html">Automated Version Control</a></td>
+</tr>
+<tr class="even">
+<td align="left">2. <a href="02-setup-kr.html">Git 구축 및 설정</a></td>
+<td align="left">2. <a href="02-setup.html">Setting Up Git</a></td>
+</tr>
+<tr class="odd">
+<td align="left">3. <a href="03-create-kr.html">저장소 생성</a></td>
+<td align="left">3. <a href="03-create.html">Creating a Repository</a></td>
+</tr>
+<tr class="even">
+<td align="left">4. <a href="04-changes-kr.html">변경사항 추적</a></td>
+<td align="left">4. <a href="04-changes.html">Tracking Changes</a></td>
+</tr>
+<tr class="odd">
+<td align="left">5. <a href="05-history-kr.html">이력 탐색</a></td>
+<td align="left">5. <a href="05-history.html">Exploring History</a></td>
+</tr>
+<tr class="even">
+<td align="left">6. <a href="06-ignore-kr.html">관리에서 제외</a></td>
+<td align="left">6. <a href="06-ignore.html">Ignoring Things</a></td>
+</tr>
+<tr class="odd">
+<td align="left">7. <a href="07-github-kr.html">GitHub 원격작업</a></td>
+<td align="left">7. <a href="07-github.html">Remotes in GitHub</a></td>
+</tr>
+<tr class="even">
+<td align="left">8. <a href="08-collab-kr.html">협업</a></td>
+<td align="left">8. <a href="08-collab.html">Collaborating</a></td>
+</tr>
+<tr class="odd">
+<td align="left">9. <a href="09-conflict-kr.html">충돌</a></td>
+<td align="left">9. <a href="09-conflict.html">Conflicts</a></td>
+</tr>
+<tr class="even">
+<td align="left">10. <a href="10-open-kr.html">공개과학</a></td>
+<td align="left">10. <a href="10-open.html">Open Science</a></td>
+</tr>
+<tr class="odd">
+<td align="left">11. <a href="11-licensing-kr.html">라이선싱</a></td>
+<td align="left">11. <a href="11-licensing.html">Licensing</a></td>
+</tr>
+<tr class="even">
+<td align="left">12. <a href="12-hosting-kr.html">호스팅</a></td>
+<td align="left">12. <a href="12-hosting.html">Hosting</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="추가-학습교재">추가 학습교재</h2>
+<ul>
+<li><a href="reference.html">참고문헌</a></li>
+<li><a href="discussion.html">토론</a></li>
+<li><a href="instructors.html">강사 안내서</a></li>
+</ul>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/git-novice">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>
