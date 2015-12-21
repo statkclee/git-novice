@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: Git을 사용한 버젼 관리</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">Git을 사용한 버젼 관리</h1></a>
+          <h2 class="subtitle">협업</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-certificate"></span>학습 목표</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li>공동 저장소로 푸쉬해서 협업한다.</li>
+</ul>
+</div>
+</section>
+<p>다음 단계로, 짝을 짖는다. 한 사람이 “소유자”(연습을 시작하는데 사용될 GitHub 저장소 주인)가 되고, 다른 사람이 “협력자”(소유자 저장소를 복제해서 변경을 하는 사람)가 된다.</p>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-pushpin"></span>혼자 훈련하기</h2>
+</div>
+<div class="panel-body">
+<p>스스로 학습을 쭉해 왔다면, 두번째 터미널 윈도우를 열고 다른 디렉토리(예를 들어, <code>/tmp</code>)로 바꾸어 계속 진행할 수 있다. 두번째 윈도우가 여러분의 협력자를 나타내고, 다른 컴퓨터에서 작업하고 있다. GitHub 접근권한을 다른 사람에게 줄 필요는 없다. 왜냐하면 두 ‘파트너’ 모두 여러분이기 때문이다.</p>
+</div>
+</aside>
+<p>소유자가 협력자에게 접근권한을 부여할 필요가 있다. GitHub에서 오른쪽에 ‘setting’ 버튼을 클릭해서 협력자 사용자이름을 입력한다.</p>
+<div class="figure">
+<img src="fig/github-add-collaborators.png" alt="GitHub에 협력자 추가" /><p class="caption">GitHub에 협력자 추가</p>
+</div>
+<p>협력자는 로컬 컴퓨터에서 해당 프로젝트 작업을 수행할 필요가 있다. <code>cd</code> 명령어로 또 다른 디렉토리로 가서 (<code>ls</code> 명령어로 <code>planets</code> 폴더를 볼 수 없다.), 소유자 저장소 사본을 만든다:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> clone https://github.com/vlad/planets.git</code></pre>
+<p>’vlad’를 소유자 사용자이름(저장소를 소유하고 있는 사람)으로 바꾼다.</p>
+<p><code>git clone</code> 명령어는 원격 저장소와 동일한 새로운 로컬 사본을 생성한다.</p>
+<div class="figure">
+<img src="fig/github-collaboration.svg" alt="저장소 복제를 생성한 후" /><p class="caption">저장소 복제를 생성한 후</p>
+</div>
+<p>이제 새로운 협력자가 자신의 저장소에 변경사항을 만들 수 있다:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cd</span> planets
+$ <span class="kw">nano</span> pluto.txt
+$ <span class="kw">cat</span> pluto.txt</code></pre>
+<pre class="output"><code>It is so a planet!</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> add pluto.txt
+$ <span class="kw">git</span> commit -m <span class="st">&quot;Some notes about Pluto&quot;</span></code></pre>
+<pre class="output"><code> 1 file changed, 1 insertion(+)
+ create mode 100644 pluto.txt</code></pre>
+<p>그리고, 변경사항을 GitHub에 푸쉬한다:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> push origin master</code></pre>
+<pre class="output"><code>Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 306 bytes, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/vlad/planets.git
+   9272da5..29aba7c  master -&gt; master</code></pre>
+<p>주목할 점은 <code>origin</code> 이라는 원격 저장소를 생성할 필요는 없다: 저장소를 복제(clone)할때 사용한 이름을 Git이 자동으로 사용해서 수행한다. (수작업으로 원격 설정을 할 때, 앞에서 왜 <code>origin</code> 이름을 사용한 것이 현명한 선택인 이유다.)</p>
+<p>이제 우리의 컴퓨터에 GitHub 원본 저장소의 변경사항을 다운로드할 수 있다:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> pull origin master</code></pre>
+<pre class="output"><code>remote: Counting objects: 4, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 3 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From https://github.com/vlad/planets
+ * branch            master     -&gt; FETCH_HEAD
+Updating 9272da5..29aba7c
+Fast-forward
+ pluto.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 pluto.txt</code></pre>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/git-novice">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>
