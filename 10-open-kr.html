@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: Git을 사용한 버젼 관리</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">Git을 사용한 버젼 관리</h1></a>
+          <h2 class="subtitle">공개 과학</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-certificate"></span>학습 목표</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li>컴퓨터 작업에서 버젼제어 시스템이 전자연구노트로 영향력을 어떻게 발휘될 수 있는지 설명한다.</li>
+</ul>
+</div>
+</section>
+<blockquote>
+<p>“공개(open)”의 반대는 “폐쇄(closed)”가 아니다. “공개(open)”의 반대는 “망한(broken)” 것이다.</p>
+<p>— John Wilbanks</p>
+</blockquote>
+<p>정보의 자유 공유는 과학에서 이상적일지 모르지만, 현실은 좀더 복잡하다. 현재, 보통 실무는 다음과 같다:</p>
+<ul>
+<li>과학자가 데이터를 수집하고 학과에 가끔 백업되는 컴퓨터에 저장한다.</li>
+<li>데이터를 분석하기 위해서 작은 프로그램을 작성하고 수정한다. (프로그램도 연구원의 로컬 노트북에 저장된다.)</li>
+<li>적당한 분석 결과가 생성되자 마자, 작성해서 논문을 제출한다. 데이터를 논문에 포함할 수도 있다. (점점 많은 저널이 데이터를 요구한다.) 하지만, 아마도 프로그램 코드는 포함하지 않을 것이다.</li>
+<li>시간이 흐른다.</li>
+<li>저널에서는 연구원 분야의 익명으로된 소수의 사람들에게서 받아 검토(review)결과를 보낸다. 검토 결과를 충족하도록 논문을 수정한다. 수정하는 동안에 앞서 작성한 프로그램, 스크립트를 변경해서 다시 제출한다.</li>
+<li>좀더 많은 시간이 흐른다.</li>
+<li>종국에 논문이 출판된다. 논문에 데이터 온라인 사본 링크를 포함할 수도 있다. 하지만, 논문은 유료로 돈을 내야만 접근가능하다는 장벽(paywall)에 막혀있다: 개인 혹은 기관 접근 권한을 가진 사람만이 논문을 읽을 수 있다.</li>
+</ul>
+<p>하지만, 점점 더 많은 과학자들에게, 프로세스는 다음과 같다:</p>
+<ul>
+<li>과학자가 수집한 데이터가 수집되는 즉시, <a href="http://figshare.com/">figshare</a> 혹은 <a href="http://zenodo.org">Zenodo</a>같은 공개 접근 저장소에 저장된다. 그리고 <a href="https://en.wikipedia.org/wiki/Digital_object_identifier">디지털 객체 식별자(Digital Object Identifier, DOI)</a>가 부여된다. 혹은 데이터를 이미 게시하고 <a href="http://datadryad.org/">Dryad</a>에 저장한다.</li>
+<li>과학자가 작업물을 보관할 저장소를 GitHub에 생성한다.</li>
+<li>분석작업을 수행하면서, 스크립트의 변경사항을 (아마도 몇몇 산출 결과도 포함해서) 저장소에 푸쉬한다. 논문을 위한 저장소를 다목적으로 사용한다; 이 저장소가 다른 동료 과학자와 협업하는 허브가 된다.</li>
+<li>논문 상태에 만족할 정도로 진행되면, <a href="http://arxiv.org/">arXiv</a> 혹은 다른 사전 출력 서비스에 게시하고, 다른 동료 과학자를 초대해서 피드백을 받는다.</li>
+<li>피드백에 기초해서 저널에 논문을 마지막으로 제출하기 전 몇번의 수정사항을 게시할 수도 있다.</li>
+<li>출판된 논문은 사전출판논문, 코드, 그리고 데이터 저장소의 링크를 포함한다. 그렇게 함으로써 다른 과학자가 본인 연구의 시작점으로 삼아서 연구를 쉽게 연결해서 수행할 수 있게 된다.</li>
+</ul>
+<p>이러한 공개 연구 모형은 발견을 가속시킨다. 연구 작업이 더 많이 공개될수록, <a href="http://dx.doi.org/10.1371/journal.pone.0000308">더 많이 인용되고 재사용된다(the more widely it is cited and re-used)</a>. 하지만, 이런 방식으로 작업하고 연구하고자 하는 사람들은 실무에서 “공개(open)”가 정확하게 의미하는 바에 대해서 몇가지 결정을 내릴 필요가 있다.</p>
+<p>이것이 버젼제어를 가르치는 (많은) 이유 중의 하나다. 버젼제어가 꾸준히 사용될 때, 컴퓨터 작업에 대한 공유가능한 전자연구노트로 활동함으로써 “방법”에 대한 질문에 답을 한다:</p>
+<ul>
+<li>누가 언제 무엇을 했는지를 포함해서, 작업에 대한 개념적 단계가 문서화된다. 모든 단계는 (커밋 ID)식별자로 도장이 찍힌다. 식별자는 의도와 목적을 갖는 중복되지 않고 유일하다.</li>
+<li>이유, 아이디어, 다른 지적 작업에 대한 문서화를 이것에서 생겨난 변경사항과 묶을 수 있다.</li>
+<li>중복되지 않고 유일하고 복구가능한 방식으로 컴퓨터 작업 결과물을 얻는데 연구에서 사용한 것을 참조할 수 있다.</li>
+<li>Git같은 분산된 버젼제어 시스템으로, 버젼제어 저장소는 영속성을 쉽게 얻을 수 있고, 전체 이력을 담아낼 수 있다.</li>
+</ul>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-pushpin"></span>코드를 인용가능하게 만들기</h2>
+</div>
+<div class="panel-body">
+<p>GitHub에서 나온 <a href="https://guides.github.com/activities/citable-code/">짧은 안내서</a>에 작성한 코드, 논문, 혹은 버젼제어 저장소에 올린 다른 어떤 것에 대해서도 디지털 객체 식별자(DOI)를 생성하는 방법을 설명하고 있다.</p>
+</div>
+</aside>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-pencil"></span>내가 작업한 작업은 얼마나 재현가능할까?</h2>
+</div>
+<div class="panel-body">
+<p>연구실 동료중 한명에게 논문에 나온 내용과 웹으로만 최근에 본인이 성취한 결과를 재현할 수 있는지 물어본다. 동료 결과물 중 하나에 대해서도 같은 작업을 수행해 본다. 그리고 나서, 일하고 있는 연구실에 나온 결과물에 대해서도 시도를 해본다.</p>
+</div>
+</section>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/git-novice">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>
