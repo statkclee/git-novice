@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="generator" content="pandoc">
     <title>Software Carpentry: Git을 사용한 버젼 관리</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
-    <link rel="stylesheet" type="text/css" href="css/swc.css" />
-    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
-    <meta charset="UTF-8" />
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
   <body class="lesson">
     <div class="container card">
-      <div class="banner">
-        <a href="http://software-carpentry.org" title="Software Carpentry">
-          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
-        </a>
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
       </div>
       <article>
       <div class="row">
@@ -30,7 +30,7 @@
           <h2 class="subtitle">이력 탐색</h2>
           <section class="objectives panel panel-warning">
 <div class="panel-heading">
-<h2 id="학습-목표"><span class="glyphicon glyphicon-certificate"></span>학습 목표</h2>
+<h2><span class="glyphicon glyphicon-certificate"></span>학습 목표</h2>
 </div>
 <div class="panel-body">
 <ul>
@@ -41,7 +41,7 @@
 </div>
 </section>
 <p>다른 단계에서 무엇을 변경했는지 알고자 한다면, <code>git diff</code>를 다시 사용한다. 하지만 이전 버젼은 <code>HEAD~1</code>, <code>HEAD~2</code>, 등등 표기법으로 사용한다:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> diff HEAD~1 mars.txt</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> diff HEAD~1 mars.txt</code></pre>
 <pre class="output"><code>diff --git a/mars.txt b/mars.txt
 index 315bf3a..b36abfd 100644
 --- a/mars.txt
@@ -50,7 +50,7 @@ index 315bf3a..b36abfd 100644
  Cold and dry, but everything is my favorite color
  The two moons may be a problem for Wolfman
 +But the Mummy will appreciate the lack of humidity</code></pre>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> diff HEAD~2 mars.txt</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> diff HEAD~2 mars.txt</code></pre>
 <pre class="output"><code>diff --git a/mars.txt b/mars.txt
 index df0654a..b36abfd 100644
 --- a/mars.txt
@@ -61,7 +61,7 @@ index df0654a..b36abfd 100644
 +But the Mummy will appreciate the lack of humidity</code></pre>
 <p>이런 방식으로, 연쇄 커밋 사슬을 구성할 수 있다. 가장 최근 사슬의 끝값은 <code>HEAD</code>로 참조된다; <code>~</code> 표기법을 사용하여 이전 커밋을 참조할 수 있다. 그래서 <code>HEAD~1</code>(“head 마이너스 1”으로 읽는다.)은 “바로 앞선 커밋”을 의미하고, <code>HEAD~123</code>은 지금 있는 위치에서 123번째 이전 수정으로 간다는 의미가 된다.</p>
 <p>커밋된 것을 <code>git log</code> 명령어로 화면에 뿌려주는 숫자와 문자로 구성된 긴 문자열을 사용하여 참조할 수도 있다. 변경사항에 대해서 중복되지 않는 ID로 “중복되지 않는(unique)”의 의미는 정말 유일하다는 의미다: 특정 컴퓨터에 있는 임의 파일 집합에 대한 모든 변경사항은 중복되지 않는 40-문자 식별자가 붙어있다. 첫번째 커밋은 ID로 f22b25e3233b4645dabd0d81e651fe074bd8e73b 이 주어졌다. 그래서 다음과 같이 시도하자:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> diff f22b25e3233b4645dabd0d81e651fe074bd8e73b mars.txt</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> diff f22b25e3233b4645dabd0d81e651fe074bd8e73b mars.txt</code></pre>
 <pre class="output"><code>diff --git a/mars.txt b/mars.txt
 index df0654a..b36abfd 100644
 --- a/mars.txt
@@ -71,7 +71,7 @@ index df0654a..b36abfd 100644
 +The two moons may be a problem for Wolfman
 +But the Mummy will appreciate the lack of humidity</code></pre>
 <p>올바든 정답이지만, 난수 40-문자로 된 문자열을 타이핑하는 것은 매우 귀찮은 일이다. 그래서 Git 앞의 몇개 문자만으로도 사용할 수 있게 했다:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> diff f22b25e mars.txt</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> diff f22b25e mars.txt</code></pre>
 <pre class="output"><code>diff --git a/mars.txt b/mars.txt
 index df0654a..b36abfd 100644
 --- a/mars.txt
@@ -81,11 +81,11 @@ index df0654a..b36abfd 100644
 +The two moons may be a problem for Wolfman
 +But the Mummy will appreciate the lack of humidity</code></pre>
 <p>좋았어요! 파일에 변경사항을 저장할 수 있고 변경된 것을 확인할 수 있다. 어떻게 옛 버젼 파일을 되살릴 수 있을까? 우연히 파일을 덮어썼다고 가정하자:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">nano</span> mars.txt
-$ <span class="kw">cat</span> mars.txt</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">nano</span> mars.txt
+$ <span class="kw">cat</span> mars.txt</code></pre>
 <pre class="output"><code>We will need to manufacture our own oxygen</code></pre>
 <p>이제 <code>git status</code>를 통해서 파일이 변경되었다고 하지만, 변경사항은 아직 준비영역(Stagin)에 옮겨지지 않은 것으로 확인된다:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> status</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> status</code></pre>
 <pre class="output"><code># On branch master
 # Changes not staged for commit:
 #   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
@@ -95,44 +95,42 @@ $ <span class="kw">cat</span> mars.txt</code></pre></div>
 #
 no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</code></pre>
 <p><code>git checkout</code> 명령어를 사용해서 과거에 있던 상태로 파일을 돌려 놓을 수 있다:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> checkout HEAD mars.txt
-$ <span class="kw">cat</span> mars.txt</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> checkout HEAD mars.txt
+$ <span class="kw">cat</span> mars.txt</code></pre>
 <pre class="output"><code>Cold and dry, but everything is my favorite color
 The two moons may be a problem for Wolfman
 But the Mummy will appreciate the lack of humidity</code></pre>
 <p>이름에서 유추할 수 있듯이, <code>git checkout</code> 명령어는 파일 옛 버젼을 확인하고 갖고 나간다. 즉, 되살린다. 이 경우 <code>HEAD</code>에 기록된 가장 최근에 저장된 파일 버젼을 되살린다. 좀더 오래된 버젼을 되살리고자 한다면, 대신에 커밋 식별자를 사용한다:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> checkout f22b25e mars.txt</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> checkout f22b25e mars.txt</code></pre>
 <p>실행 취소를 하는 변경을 하기 *전에** 저장소 상태를 확인하는 커밋 번호를 사용해야 한다는 것을 기억하는 것이 중요하다. 흔한 실수는 제거하려고 변경하려고 사용한 커밋 번호를 사용하는 것이다. 아래 예제에서는 커밋 번호가 <code>f22b25e</code>인 가장 최신 커밋(<code>HEAD~1</code>) 앞의 상태로 다시 되돌리고자 한다:</p>
 <div class="figure">
-<img src="fig/git-checkout.svg" alt="Git Checkout" />
-<p class="caption">Git Checkout</p>
+<img src="fig/git-checkout.svg" alt="Git Checkout" /><p class="caption">Git Checkout</p>
 </div>
 <p>그래서, 모두 한군데 놓아보자:</p>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
-<h2 id="만화로-보는-git-동작-방식."><span class="glyphicon glyphicon-pushpin"></span>만화로 보는 Git 동작 방식.</h2>
+<h2><span class="glyphicon glyphicon-pushpin"></span>만화로 보는 Git 동작 방식.</h2>
 </div>
 <div class="panel-body">
 <div class="figure">
-<img src="fig/git_staging.svg" alt="http://figshare.com/articles/How_Git_works_a_cartoon/1328266" />
-<p class="caption">http://figshare.com/articles/How_Git_works_a_cartoon/1328266</p>
+<img src="fig/git_staging.svg" alt="http://figshare.com/articles/How_Git_works_a_cartoon/1328266" /><p class="caption">http://figshare.com/articles/How_Git_works_a_cartoon/1328266</p>
 </div>
 </div>
 </aside>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
-<h2 id="일반적인-사례를-단순화"><span class="glyphicon glyphicon-pushpin"></span>일반적인 사례를 단순화</h2>
+<h2><span class="glyphicon glyphicon-pushpin"></span>일반적인 사례를 단순화</h2>
 </div>
 <div class="panel-body">
 <p><code>git status</code> 출력 결과를 주의 깊이 읽게 되면, 힌트가 포함된 것을 보게 된다:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">(use</span> <span class="st">&quot;git checkout -- &lt;file&gt;...&quot;</span> to discard changes in working directory<span class="kw">)</span></code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">(use</span> <span class="st">&quot;git checkout -- &lt;file&gt;...&quot;</span> to discard changes in working directory<span class="kw">)</span></code></pre>
 <p>출력 결과가 말해주듯이, 버젼 식별자 없는 <code>git checkout</code> 명령어가 <code>HEAD</code>에 저장된 상태로 파일을 되돌린다. 이중 대쉬 <code>--</code>는 명령어 그자체로부터 되살리려는 파일 이름을 구별하는데 필요하다: 이중 대쉬가 없다면, Git는 파일 이름을 커밋 식별자로 사용한다.</p>
 </div>
 </aside>
 <p>파일이 하나씩 하나씩 옛 상태로 되돌린다는 사실이 사람들이 작업을 조직하는 방식에 변화를 주는 경향이 있다. 모든 것이 하나의 큰 문서로 되어있다면, 나중에 결론부분에 변경사항을 실행취소하지 않고, 소개부분에 변경을 다시 되돌리기가 쉽지 않다(하지만 불가능하지는 않다). 다른 한편으로 만약 소개부분과 결론부분이 다른 파일에 저장되어 있다면, 시간 앞뒤로 이동하기가 훨씬 쉽다.</p>
 <section class="challenge panel panel-success">
 <div class="panel-heading">
-<h2 id="파일-이전-버젼-복구하기"><span class="glyphicon glyphicon-pencil"></span>파일 이전 버젼 복구하기</h2>
+<h2><span class="glyphicon glyphicon-pencil"></span>파일 이전 버젼 복구하기</h2>
 </div>
 <div class="panel-body">
 <p>정훈이가 몇주동안 작업한 파이썬 스크립트에 변경을 했고, 오늘 아침 정훈이가 작업한 변경사항이 스크립트를 “망가 먹어서” 더이상 실행이 되지 않는다. 복도 없이, 버그를 고치는데 1시간 이상 소모했다…</p>
@@ -149,15 +147,15 @@ But the Mummy will appreciate the lack of humidity</code></pre>
         </div>
       </div>
       </article>
-      <div class="footer">
-        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
-        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/git-novice">Source</a>
-        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
-        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/git-novice">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
       </div>
     </div>
-    <!-- Javascript placed at the end of the document so the pages load faster -->
-    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
     <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
   </body>
 </html>

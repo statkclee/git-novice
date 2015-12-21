@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="generator" content="pandoc">
     <title>Software Carpentry: Git을 사용한 버젼 관리</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
-    <link rel="stylesheet" type="text/css" href="css/swc.css" />
-    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
-    <meta charset="UTF-8" />
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
   <body class="lesson">
     <div class="container card">
-      <div class="banner">
-        <a href="http://software-carpentry.org" title="Software Carpentry">
-          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
-        </a>
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
       </div>
       <article>
       <div class="row">
@@ -30,7 +30,7 @@
           <h2 class="subtitle">자동화된 버젼제어</h2>
           <section class="objectives panel panel-warning">
 <div class="panel-heading">
-<h2 id="학습-목표"><span class="glyphicon glyphicon-certificate"></span>학습 목표</h2>
+<h2><span class="glyphicon glyphicon-certificate"></span>학습 목표</h2>
 </div>
 <div class="panel-body">
 <ul>
@@ -45,23 +45,20 @@
 <p>이전에 상기와 같은 상황에 처했었다: 같은 문서에 대해서 거의 동일한 다수 버젼을 관리하는 것은 우수워 보인다. 일부 워드프로세서가 이런 상황을 좀더 잘 처리하도록 하는 기능이 있다. 예를 들어, 마이크로소프트 워드 “변경사항 추적(Track Changes)” 혹은 구글 닥스(Google Docs)의 버젼 이력이 그것이다.</p>
 <p>버젼제어 시슽메은 문서의 기본 버젼으로 시작하고 나서, 각 단계마다 변경한 이력을 저장한다. 테이프로 생각하면 쉽다: 테이프를 되감으면, 문서 시작한 지점으로 가고, 각 변경사항을 다시 돌리면 가장 최근 버젼이 된다.</p>
 <div class="figure">
-<img src="fig/play-changes.svg" alt="변경사항이 순차적으로 저장됨" />
-<p class="caption">변경사항이 순차적으로 저장됨</p>
+<img src="fig/play-changes.svg" alt="변경사항이 순차적으로 저장됨" /><p class="caption">변경사항이 순차적으로 저장됨</p>
 </div>
 <p>변경사항을 문서 그자체로부터 떨어진 것으로 생각하면, 동일 기반 문서에 다른 변경사항을 “재생(playback)”하고, 다른 문서 버젼을 관리하는 것으로 간주할 수 있다. 예를 들어, 사용자 두명이 같은 문서에 독립적인 변경 작업을 수행할 수 있다.</p>
 <div class="figure">
-<img src="fig/versions.svg" alt="다른 버젼이 저장될 수도 있음" />
-<p class="caption">다른 버젼이 저장될 수도 있음</p>
+<img src="fig/versions.svg" alt="다른 버젼이 저장될 수도 있음" /><p class="caption">다른 버젼이 저장될 수도 있음</p>
 </div>
 <p>만약 충돌나지 않으면, 심지어 동일 문서에서 두가지 변경사항을 작업할 수도 있다.</p>
 <div class="figure">
-<img src="fig/merge.svg" alt="Multiple versions can be merged" />
-<p class="caption">Multiple versions can be merged</p>
+<img src="fig/merge.svg" alt="Multiple versions can be merged" /><p class="caption">Multiple versions can be merged</p>
 </div>
 <p>버젼제어 시스템은 사용자를 대신해서 변경사항을 기록하고, 파일 버젼을 생성하고 파일병합하는데 유용한 도구다. 버젼제어 시스템은 어떤 변경사항을 다음 버젼에 반영(<a href="reference.html#commit">커밋(commit)</a>으로 불림)할지 결정하는 할 수 있게 하고, 커밋에 관한 유용한 메타정보를 보관한다. 특정 프로젝트와 프로젝트 메타정보에 대한 완전한 커밋이력은 <a href="reference.html#repository">저장소(repository)</a>에 보관된다. 저장소는 협업하는 여러 동료 컴퓨터에 걸쳐 동기화될 수 있다.</p>
 <aside class="callout panel panel-info">
 <div class="panel-heading">
-<h2 id="버젼제어-시스템의-오랜-역사"><span class="glyphicon glyphicon-pushpin"></span>버젼제어 시스템의 오랜 역사</h2>
+<h2><span class="glyphicon glyphicon-pushpin"></span>버젼제어 시스템의 오랜 역사</h2>
 </div>
 <div class="panel-body">
 <p>자동화된 버젼제어 시스템이 새로운 것은 전혀 아니다. RCS, CVS, Subversion 같은 도구는 이제 레거시 시스템(legacy system)으로 간주된다. 이들 과거 시스템은 최근에 등장한 도구 Git과 <a href="http://swcarpentry.github.io/hg-novice/">Mercurial</a>보다 더 제한된 능력을 제공했다. 특히 최근에 등장한 도구는 <em>분산기능</em>을 제공한다. 저장소를 굳이 중앙 서버에 둘 필요가 없다는 의미다.</p>
@@ -70,15 +67,15 @@
         </div>
       </div>
       </article>
-      <div class="footer">
-        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
-        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/git-novice">Source</a>
-        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
-        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/git-novice">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
       </div>
     </div>
-    <!-- Javascript placed at the end of the document so the pages load faster -->
-    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
     <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
   </body>
 </html>

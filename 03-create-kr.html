@@ -4,24 +4,24 @@
     <meta charset="utf-8">
     <meta name="generator" content="pandoc">
     <title>Software Carpentry: Git을 사용한 버젼 관리</title>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
-    <link rel="stylesheet" type="text/css" href="css/swc.css" />
-    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
-    <meta charset="UTF-8" />
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
   </head>
   <body class="lesson">
     <div class="container card">
-      <div class="banner">
-        <a href="http://software-carpentry.org" title="Software Carpentry">
-          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
-        </a>
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
       </div>
       <article>
       <div class="row">
@@ -30,7 +30,7 @@
           <h2 class="subtitle">저장소 생성</h2>
           <section class="objectives panel panel-warning">
 <div class="panel-heading">
-<h2 id="학습-목표"><span class="glyphicon glyphicon-certificate"></span>학습 목표</h2>
+<h2><span class="glyphicon glyphicon-certificate"></span>학습 목표</h2>
 </div>
 <div class="panel-body">
 <ul>
@@ -39,18 +39,18 @@
 </div>
 </section>
 <p>Git 환경설정이 완료되면, Git를 사용할 수 있다. 작업을 위해서 디렉토리를 생성하고 나서, 해당 디렉토리로 이동한다.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mkdir</span> planets
-$ <span class="kw">cd</span> planets</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mkdir</span> planets
+$ <span class="kw">cd</span> planets</code></pre>
 <p>그리고 나서, <code>planets</code>을 <a href="reference.html#repository">저장소(repository)</a>로 만든다 — 저장소는 Git이 파일에 대한 버젼정보를 저장하는 장소다:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> init</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> init</code></pre>
 <p><code>ls</code>를 사용해서 디렉토리 내용을 살펴보면, 변한 것이 아무것도 없는 것처럼 보인다:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">ls</span></code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">ls</span></code></pre>
 <p>하지만, 모든 것을 보여주는 <code>-a</code> 플래그를 추가하면 , Git가 <code>planets</code> 디렉토리 내부에 <code>.git</code> 로 불리는 숨겨진 디렉토리를 생성한 것을 볼 수 있다:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">ls</span> -a</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">ls</span> -a</code></pre>
 <pre class="output"><code>.   ..  .git</code></pre>
 <p>Git은 <code>.git</code>이라는 특별한 하위 디렉토리에 프로젝트에 대한 정보를 저장한다. 만약 <code>.git</code>를 삭제하면, 프로젝트 이력을 모두 잃어버리게 된다.</p>
 <p>모든 것이 제대로 설정되었는지를 확인을 하려면, Git에게 다음과 같이 프로젝트 상태를 확인 명령어를 던진다:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> status</code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> status</code></pre>
 <pre class="output"><code># On branch master
 #
 # Initial commit
@@ -58,32 +58,32 @@ $ <span class="kw">cd</span> planets</code></pre></div>
 nothing to commit (create/copy files and use &quot;git add&quot; to track)</code></pre>
 <section class="challenge panel panel-success">
 <div class="panel-heading">
-<h2 id="git-저장소를-생성할-장소"><span class="glyphicon glyphicon-pencil"></span>Git 저장소를 생성할 장소</h2>
+<h2><span class="glyphicon glyphicon-pencil"></span>Git 저장소를 생성할 장소</h2>
 </div>
 <div class="panel-body">
 <p>드라큘라는 <code>plantes</code> 프로젝트와 관련된, 새로운 프로젝트 <code>moons</code> 를 시작한다. 늑대인간의 걱정에 불구하고, Git 저장소 내부에 또다른 Git 저장소를 생성하려고 다음 순서로 명령어를 입력해 나간다:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cd</span>             <span class="co"># 홈 디렉토리로 되돌아 간다.</span>
-<span class="kw">mkdir</span> planets  <span class="co"># 신규 디렉토리 planets를 생성한다.</span>
-<span class="kw">cd</span> planets     <span class="co"># planets 디렉토리로 들어간다.</span>
-<span class="kw">git</span> init       <span class="co"># planet 디렉토리에 Git 저장소를 생성한다.</span>
-<span class="kw">mkdir</span> moons    <span class="co"># 하위 디렉토리 planets/moons를 생성한다.</span>
-<span class="kw">cd</span> moons       <span class="co"># planets/moons로 들어간다.</span>
-<span class="kw">git</span> init       <span class="co"># Git 저장소를 moons 하위디렉토리에 생성한다.</span></code></pre></div>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cd</span>             # 홈 디렉토리로 되돌아 간다.
+<span class="kw">mkdir</span> planets  # 신규 디렉토리 planets를 생성한다.
+<span class="kw">cd</span> planets     # planets 디렉토리로 들어간다.
+git init       # planet 디렉토리에 Git 저장소를 생성한다.
+<span class="kw">mkdir</span> moons    # 하위 디렉토리 planets/moons를 생성한다.
+<span class="kw">cd</span> moons       # planets/moons로 들어간다.
+git init       # Git 저장소를 moons 하위디렉토리에 생성한다.</code></pre>
 <p>이렇게 하는 것이 왜 나쁜 생각일까? 드라큘라는 마지막 <code>git init</code> 명령어를 “실행취소(undo)”할 수 있을까?</p>
 </div>
 </section>
         </div>
       </div>
       </article>
-      <div class="footer">
-        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
-        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/git-novice">Source</a>
-        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
-        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/git-novice">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
       </div>
     </div>
-    <!-- Javascript placed at the end of the document so the pages load faster -->
-    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
     <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
   </body>
 </html>

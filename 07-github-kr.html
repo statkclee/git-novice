@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
+    <title>Software Carpentry: Git을 사용한 버젼 관리</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap-theme.css" />
+    <link rel="stylesheet" type="text/css" href="css/swc.css" />
+    <link rel="alternate" type="application/rss+xml" title="Software Carpentry Blog" href="http://software-carpentry.org/feed.xml"/>
+    <meta charset="UTF-8" />
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body class="lesson">
+    <div class="container card">
+      <div class="banner">
+        <a href="http://software-carpentry.org" title="Software Carpentry">
+          <img alt="Software Carpentry banner" src="img/software-carpentry-banner.png" />
+        </a>
+      </div>
+      <article>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+                    <a href="index.html"><h1 class="title">Git을 사용한 버젼 관리</h1></a>
+          <h2 class="subtitle">GitHub 원격작업</h2>
+          <section class="objectives panel panel-warning">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-certificate"></span>학습 목표</h2>
+</div>
+<div class="panel-body">
+<ul>
+<li>원격 저장소가 무엇인지 그리고 왜 원격 저장소가 유용한지 설명한다.</li>
+<li>원격 저장소를 복제(clone)한다.</li>
+<li>원격 저장소에서 변경사항을 푸쉬(push)와 풀(pull)한다.</li>
+</ul>
+</div>
+</section>
+<p>버젼 제어(version control)는 다른 사람과 협업할 때 진정으로 다가온다. 우리는 이미 버젼 제어를 위해 필요한 컴퓨터 대부분을 가졌다. 한가지 빠진 것은 한 저장소에서 다른 저장소로 변경사항을 복사하는 것이다.</p>
+<p>Git 같은 시스템은 임의 두 저장소 사이에 작업을 옮길 수 있게 한다. 하지만, 실무에서 다른 사람의 노트북이나 PC보다는 중앙 허브에 웹 방식으로 하나의 원본을 두고 사용하는 것이 가장 쉽다. 대부분의 프로그래머는 프로그램 마스터 원본을 <a href="http://github.com">GitHub</a>, <a href="http://bitbucket.org">BitBucket</a>, <a href="http://gitlab.com/">GitLab</a> 호스팅 서비스에 두고 사용한다; 이번 학습 마지막 부분에서 이러한 접근법의 장점과 단점을 살펴본다.</p>
+<p>세상 사람들과 현재 프로젝트에서 변경한 사항을 공유하는 것에서부터 시작해보자. GitHub에 로그인하고 나서, 우측 상단 아이콘을 클릭해서 <code>planets</code> 이름으로 신규 저장소를 생성한다:</p>
+<div class="figure">
+<img src="fig/github-create-repo-01.png" alt="Creating a Repository on GitHub (Step 1)" /><p class="caption">Creating a Repository on GitHub (Step 1)</p>
+</div>
+<p>저장소 이름을 “planets”으로 만들고 “Create Repostiory”를 클릭한다:</p>
+<div class="figure">
+<img src="fig/github-create-repo-02.png" alt="Creating a Repository on GitHub (Step 2)" /><p class="caption">Creating a Repository on GitHub (Step 2)</p>
+</div>
+<p>저장소가 생성되자 마자, Git는 URL을 가진 페이지와 사용자가 로컬 저장소 환경설정 방법에 대한 정보를 화면에 출력한다:</p>
+<div class="figure">
+<img src="fig/github-create-repo-03.png" alt="Creating a Repository on GitHub (Step 3)" /><p class="caption">Creating a Repository on GitHub (Step 3)</p>
+</div>
+<p>다음 명령어는 효과적으로 GitHub 서버에서 다음을 자동으로 수행한다:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mkdir</span> planets
+$ <span class="kw">cd</span> planets
+$ <span class="kw">git</span> init</code></pre>
+<p>현재 로컬 저장소는 여전히 <code>mars.txt</code> 파일에 대한 이전 작업정보를 담고 있다. 하지만, GitHub의 원격 저장소는 아직 어떠한 파일도 담고 있지는 않다:</p>
+<div class="figure">
+<img src="fig/git-freshly-made-github-repo.svg" alt="Freshly-Made GitHub Repository" /><p class="caption">Freshly-Made GitHub Repository</p>
+</div>
+<p>다음 단계는 두 저장소를 연결하는 것이다. 로컬 저장소에 대해서 GitHub 저장소를 <a href="reference.html#remote">원격(remote)</a> 저장소로 만들어 두 저장소를 연결한다. GitHub에 나온 저장소 홈페이지는 식별하는데 필요한 문자열을 포함하다:</p>
+<div class="figure">
+<img src="fig/github-find-repo-string.png" alt="Where to Find Repository URL on GitHub" /><p class="caption">Where to Find Repository URL on GitHub</p>
+</div>
+<p>SSH에서 HTTPS로 <a href="reference.html#protocol">프로토콜(protocol)</a>을 변경하려면 ‘HTTPS’ 링크를 클릭한다.</p>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-pushpin"></span>HTTPS vs SSH</h2>
+</div>
+<div class="panel-body">
+<p>부가적인 설정이 필요하지 않아서 여기서는 HTTPS를 사용한다. 워크샵 후에 SSH 접근 설정을 원할지도 모른다. SSH 접근이 좀더 안전하다. <a href="https://help.github.com/articles/generating-ssh-keys">GitHub</a>, <a href="https://confluence.atlassian.com/display/BITBUCKET/Set+up+SSH+for+Git">Atlassian/BitBucket</a>, <a href="https://about.gitlab.com/2014/03/04/add-ssh-key-screencast/">GitLab</a>에 훌륭한 지도서 중 하나를 따라하는 것도 좋다. GitLab은 온라인 동영상도 제공한다.</p>
+</div>
+</aside>
+<div class="figure">
+<img src="fig/github-change-repo-string.png" alt="Changing the Repository URL on GitHub" /><p class="caption">Changing the Repository URL on GitHub</p>
+</div>
+<p>웹 브라우져에서 URL을 복사하고 나서, 로컬 컴퓨터 <code>planets</code> 저장소로 가서 다음 명령어를 실행한다:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> remote add origin https://github.com/vlad/planets.git</code></pre>
+<p>Vlad가 아니고 여러분 저장소의 URL을 사용했는지 확인한다. 유일한 차이점은 <code>vlad</code> 대신에 여러분의 사용자이름(username)이다:</p>
+<p><code>git remote -v</code> 실행해서 명령어가 제대로 작동했는지 확인한다:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> remote -v</code></pre>
+<pre class="output"><code>origin   https://github.com/vlad/planets.git (push)
+origin   https://github.com/vlad/planets.git (fetch)</code></pre>
+<p><code>origin</code> 이름이 원격 저장소에 대한 로컬 별명이다. 원한다면 다른 명칭을 사용할 수도 있지만, <code>origin</code> 이름이 가장 일반적인 선택이다.</p>
+<p>별명이 <code>origin</code>으로 설정되면, 다음 명령어가 변경사항을 로컬 저장소에서 GitHub 원격 저장소로 밀어 넣어 푸쉬(push)한다:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> push origin master</code></pre>
+<pre class="output"><code>Counting objects: 9, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (6/6), done.
+Writing objects: 100% (9/9), 821 bytes, done.
+Total 9 (delta 2), reused 0 (delta 0)
+To https://github.com/vlad/planets
+ * [new branch]      master -&gt; master
+Branch master set up to track remote branch master from origin.</code></pre>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-pushpin"></span>프록시(Proxy)</h2>
+</div>
+<div class="panel-body">
+<p>만약 연결된 네트워크가 프록시를 사용한다면, 오류 메시지로 “Could not resolve hostname”으로 마지막 명령어가 실패할 가능성이 있다. 이 문제를 해결하기 위해서, 프록시에 대한 정보를 Git에 전달할 필요가 있다:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> config --global http.proxy http://user:password@proxy.url
+$ <span class="kw">git</span> config --global https.proxy http://user:password@proxy.url</code></pre>
+<p>프록시를 사용하지 않는 또다른 네트워크에 연결될 때, Git에게 프록시 기능을 사용하지 않도록 다음 명령어를 사용하여 일러준다:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> config --global --unset http.proxy
+$ <span class="kw">git</span> config --global --unset https.proxy</code></pre>
+</div>
+</aside>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-pushpin"></span>비밀번호 관리자(password manager)</h2>
+</div>
+<div class="panel-body">
+<p>운영체제에 비밀번호 관리자가 설정되어 있다면, 사용자이름(username)과 비밀번호(passord)가 요구될 때, <code>git push</code> 명령어가 이를 사용하려 한다. 비밀번호 관리자를 사용하는 대신에, 터미널에서 사용자이름과 비밀번호를 입력하려면, 다음과 같이 타이핑한다:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">unset</span> <span class="ot">SSH_ASKPASS</span></code></pre>
+<p>디폴트 기본설정하기 위해서는 <code>~/.bashrc</code> 끝에 상기 명령어를 추가하면 된다.</p>
+</div>
+</aside>
+<p>이제 로컬 저장소와 원격 저장소는 다음과 같은 상태가 된다:</p>
+<div class="figure">
+<img src="fig/github-repo-after-first-push.svg" alt="GitHub Repository After First Push" /><p class="caption">GitHub Repository After First Push</p>
+</div>
+<aside class="callout panel panel-info">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-pushpin"></span>‘-u’ 플래그(flag)</h2>
+</div>
+<div class="panel-body">
+<p>Git 문서에서 <code>git push</code>과 함께 사용되는 <code>-u</code> 옵션을 볼 수 있다. 중급 학습에서 다루는 개념과 연관되어서 여기서는 넘어가도록 한다.</p>
+</div>
+</aside>
+<p>또한, 원격 저장소에서 로컬 저장소를 변경사항을 풀(pull)해서 가져올 수도 있다:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> pull origin master</code></pre>
+<pre class="output"><code>From https://github.com/vlad/planets
+ * branch            master     -&gt; FETCH_HEAD
+Already up-to-date.</code></pre>
+<p>이 경우 가져오기 하는 풀(pull)은 아무런 결과가 없는데, 이유는 두 저장소가 이미 동기화가 되어서다. 하지만, 만약 누군가 GitHub 저장소에 변경사항을 푸쉬했다면, 상기 명령어는 변경된 사항을 로컬 저장소로 다운로드한다.</p>
+<section class="challenge panel panel-success">
+<div class="panel-heading">
+<h2><span class="glyphicon glyphicon-pencil"></span>GitHub 시간도장(Timestamp)</h2>
+</div>
+<div class="panel-body">
+<p>GitHub에 원격저장소를 생성하라. 클론하고, 파일을 추가하고, 변경사항을 GitHub에 푸쉬하고 나서, GitHub변경사항에 대한 <a href="reference.html#timestamp">시간도장(timestamps)</a>을 살펴본다. GitHub이 시간정보를 어떻게 기록하는가? 왜 그런가?</p>
+</div>
+</section>
+        </div>
+      </div>
+      </article>
+      <div class="footer">
+        <a class="label swc-blue-bg" href="http://software-carpentry.org">Software Carpentry</a>
+        <a class="label swc-blue-bg" href="https://github.com/swcarpentry/git-novice">Source</a>
+        <a class="label swc-blue-bg" href="mailto:admin@software-carpentry.org">Contact</a>
+        <a class="label swc-blue-bg" href="LICENSE.html">License</a>
+      </div>
+    </div>
+    <!-- Javascript placed at the end of the document so the pages load faster -->
+    <script src="http://software-carpentry.org/v5/js/jquery-1.9.1.min.js"></script>
+    <script src="css/bootstrap/bootstrap-js/bootstrap.js"></script>
+  </body>
+</html>

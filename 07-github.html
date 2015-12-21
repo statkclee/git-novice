@@ -79,7 +79,7 @@ $ <span class="kw">git</span> init</code></pre>
 <img src="fig/github-change-repo-string.png" alt="Changing the Repository URL on GitHub" /><p class="caption">Changing the Repository URL on GitHub</p>
 </div>
 <p>Copy that URL from the browser, go into the local <code>planets</code> repository, and run this command:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> remote add origin https://github.com/vlad/planets</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> remote add origin https://github.com/vlad/planets.git</code></pre>
 <p>Make sure to use the URL for your repository rather than Vlad’s: the only difference should be your username instead of <code>vlad</code>.</p>
 <p>We can check that the command has worked by running <code>git remote -v</code>:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> remote -v</code></pre>
@@ -142,7 +142,7 @@ Already up-to-date.</code></pre>
 <h2><span class="glyphicon glyphicon-pencil"></span>GitHub Timestamp</h2>
 </div>
 <div class="panel-body">
-<p>Create a repository on GitHub, clone it, add a file, push those changes to GitHub, and then look at the <a href="reference.html#timestamp">timestamp</a> of the change on GitHub. How does GitHub record times, and why?</p>
+<p>Create a remote repository on GitHub. Push the contents of your local repository to the remote. Make changes to your local repository and push these changes. Go to the repo you just created on Github and check the <a href="reference.html#timestamp">timestamps</a> of the files. How does GitHub record times, and why?</p>
 </div>
 </section>
         </div>
